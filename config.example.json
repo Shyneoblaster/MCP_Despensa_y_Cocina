@@ -1,0 +1,11 @@
+{
+  "mcp": { "url": "http://localhost:5000/mcp" },
+  "llm": {
+    "provider": "ollama",
+    "baseUrl": "http://localhost:11434",
+    "chatPath": "/api/chat",
+    "model": "qwen3.5:4b",
+    "think": false,
+    "temperature": 0.2
+  }
+}

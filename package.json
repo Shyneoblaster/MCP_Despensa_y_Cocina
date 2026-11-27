@@ -1,0 +1,26 @@
+{
+  "name": "mcp-despensa",
+  "version": "1.0.0",
+  "description": "Asistente de despensa y recetas con MCP y LLM local",
+  "scripts": {
+    "server": "tsx src/server.ts",
+    "chat": "tsx src/client.ts",
+    "test:store": "tsx src/test-store.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "type": "module"
+}

@@ -1,0 +1,14 @@
+{
+  "items": [
+    { "nombre": "huevo", "cantidad": 6, "unidad": "pza" },
+    { "nombre": "arroz", "cantidad": 500, "unidad": "g" },
+    { "nombre": "leche", "cantidad": 1000, "unidad": "ml" },
+    { "nombre": "tortilla", "cantidad": 8, "unidad": "pza" },
+    { "nombre": "queso", "cantidad": 200, "unidad": "g" },
+    { "nombre": "tomate", "cantidad": 3, "unidad": "pza" },
+    { "nombre": "cebolla", "cantidad": 2, "unidad": "pza" },
+    { "nombre": "pasta", "cantidad": 250, "unidad": "g" },
+    { "nombre": "mantequilla", "cantidad": 100, "unidad": "g" },
+    { "nombre": "ajo", "cantidad": 4, "unidad": "pza" }
+  ]
+}
