@@ -3,25 +3,25 @@
 Asistente de consola que administra la **despensa de una cocina** y sugiere recetas según lo que hay disponible. Un modelo de lenguaje local (Ollama) decide cuándo y con qué parámetros invocar las herramientas que expone un servidor **MCP** propio, escrito en TypeScript.
 
 ```
-                                                            Usuario
-                                                              |
-                                                              V
-                                                        Cliente/chat
-                                                              |
-                                                              V
-                                                      LLM local (Ollama)
-                                                              |
-                                                              V
-                                                          Llamada MCP
-                                                              |
-                                                              V
-                                                      Herramienta (JSON)
-                                                              |
-                                                              V
-                                                      LLM local (Ollama)
-                                                              |
-                                                              V
-                                                    Respuesta al usuario
+                                                   Usuario
+                                                      |
+                                                      V
+                                                Cliente/chat
+                                                      |
+                                                      V
+                                              LLM local (Ollama)
+                                                      |
+                                                      V
+                                                  Llamada MCP
+                                                      |
+                                                      V
+                                              Herramienta (JSON)
+                                                      |
+                                                      V
+                                              LLM local (Ollama)
+                                                      |
+                                                      V
+                                            Respuesta al usuario
 ```
 
 ## Configuración

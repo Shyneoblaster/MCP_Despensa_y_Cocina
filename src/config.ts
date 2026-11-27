@@ -46,7 +46,6 @@ export function cargarConfig(): Config {
     llmBaseUrl: (argumento("llm-url") ?? process.env.LLM_BASE_URL ?? archivo?.llm?.baseUrl).replace(/\/+$/, ""),
     llmChatPath: argumento("chat-path") ?? process.env.LLM_CHAT_PATH ?? archivo?.llm?.chatPath,
     model: argumento("model") ?? process.env.LLM_MODEL ?? archivo?.llm?.model,
-    // think=false desactiva el razonamiento (por defecto). 'auto' no envía el parámetro.
     think: aBooleano(argumento("think") ?? process.env.LLM_THINK ?? archivo?.llm?.think),
     temperature: Number(argumento("temperature") ?? process.env.LLM_TEMPERATURE ?? archivo?.llm?.temperature ?? 0.2),
     debug: process.argv.includes("--debug") || process.env.DEBUG === "1",
