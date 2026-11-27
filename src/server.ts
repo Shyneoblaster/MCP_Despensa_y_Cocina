@@ -6,8 +6,19 @@ import { z } from "zod";
 import { actualizarDespensa, consultarDespensa, sugerirRecetas, cocinarReceta } from "./store.js";
 
 // Host y puerto configurables por variables de entorno (requisito del documento)
-const HOST = process.env.HOST ?? "localhost";
-const PORT = Number(process.env.PORT ?? 5000);
+function envRequerida(nombre: string): string {
+  const valor = process.env[nombre]?.trim();
+  if (!valor) {
+    throw new Error(`Falta la variable de entorno ${nombre}. Defínela en .env o en la terminal.`);
+  }
+  return valor;
+}
+
+const HOST = envRequerida("HOST");
+const PORT = Number(envRequerida("PORT"));
+if (!Number.isInteger(PORT) || PORT <= 0) {
+  throw new Error(`PORT inválido: "${process.env.PORT}". Debe ser un número entero positivo.`);
+}
 
 /** Convierte el resultado de la lógica en el formato de respuesta de MCP. */
 function respuesta(r: { ok: boolean }) {
