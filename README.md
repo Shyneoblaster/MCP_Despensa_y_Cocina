@@ -3,25 +3,25 @@
 Asistente de consola que administra la **despensa de una cocina** y sugiere recetas según lo que hay disponible. Un modelo de lenguaje local (Ollama) decide cuándo y con qué parámetros invocar las herramientas que expone un servidor **MCP** propio, escrito en TypeScript.
 
 ```
-                                                   Usuario
-                                                      |
-                                                      V
-                                                Cliente/chat
-                                                      |
-                                                      V
-                                              LLM local (Ollama)
-                                                      |
-                                                      V
-                                                  Llamada MCP
-                                                      |
-                                                      V
-                                              Herramienta (JSON)
-                                                      |
-                                                      V
-                                              LLM local (Ollama)
-                                                      |
-                                                      V
-                                            Respuesta al usuario
+                                                 Usuario
+                                                    |
+                                                    V
+                                              Cliente/chat
+                                                    |
+                                                    V
+                                            LLM local (Ollama)
+                                                    |
+                                                    V
+                                                Llamada MCP
+                                                    |
+                                                    V
+                                            Herramienta (JSON)
+                                                    |
+                                                    V
+                                            LLM local (Ollama)
+                                                    |
+                                                    V
+                                          Respuesta al usuario
 ```
 
 ## Configuración
@@ -273,7 +273,7 @@ Respuesta en el navegador al abrir `http://localhost:5000/`:
 
 El modelo solicita la herramienta, el cliente hace la llamada real al servidor MCP y el modelo responde con base en el resultado.
 
-![Invocación de herramientas MCP y respuesta final](evidencias/4-herramienta.png)
+![Invocación de herramientas MCP y respuesta final](evidencias/4a-herramienta.png)
 
 ### 5. Validación y error controlado
 
