@@ -1,14 +1,32 @@
 # Despensa y Recetas — Asistente con MCP y LLM local
 
-Asistente de consola que administra la **despensa de una cocina** y sugiere recetas según lo que hay disponible. Un modelo de lenguaje local (Ollama) decide cuándo y con qué parámetros invocar las herramientas que expone un servidor **Model Context Protocol (MCP)** propio, escrito en TypeScript.
+Asistente de consola que administra la **despensa de una cocina** y sugiere recetas según lo que hay disponible. Un modelo de lenguaje local (Ollama) decide cuándo y con qué parámetros invocar las herramientas que expone un servidor **MCP** propio, escrito en TypeScript.
 
 ```
-usuario -> cliente/chat -> LLM local (Ollama) -> llamada MCP -> herramienta (JSON) -> LLM local -> respuesta al usuario
+                                                                 Usuario
+                                                                    |
+                                                                    V
+                                                              Cliente/chat
+                                                                    |
+                                                                    V
+                                                            LLM local (Ollama)
+                                                                    |
+                                                                    V
+                                                                Llamada MCP
+                                                                    |
+                                                                    V
+                                                            Herramienta (JSON)
+                                                                    |
+                                                                    V
+                                                            LLM local (Ollama)
+                                                                    |
+                                                                    V
+                                                          Respuesta al usuario
 ```
 
 ## Configuración
 
-Ninguna dirección ni nombre de modelo está fija en el código. Todos se pueden cambiar con el archivo de configuración, con variables de entorno o con argumentos de línea de comandos. Si se usan varias a la vez, el orden de prioridad es: **argumentos > variables de entorno > `config.json` > valores por defecto**.
+Ninguna dirección ni nombre de modelo está fija en el código. Todos se pueden cambiar con el archivo de configuración, con variables de entorno o con argumentos de línea de comandos. Si se usan varias a la vez, el orden de prioridad es: **argumentos > variables de entorno > `config.json`**
 
 ### Servidor — variables de entorno (`.env.example`)
 
@@ -23,10 +41,11 @@ El endpoint MCP es `http://<HOST>:<PORT>/mcp`.
 
 ### Cliente — `config.json`
 
-Si falta, créalo a partir del ejemplo (sin él, el cliente usa los valores por defecto, que son los mismos del ejemplo):
+Si faltan `config.json` o `.env`, créalos a partir de los archivos de ejemplo:
 
 ```bash
 cp config.example.json config.json
+cp .env.example .env
 ```
 
 ```json
@@ -45,7 +64,7 @@ cp config.example.json config.json
 }
 ```
 
-`think: false` desactiva el razonamiento de Qwen3.5 (respuestas mucho más rápidas con un modelo de 4B). Con `auto` el parámetro no se envía y el modelo usa su comportamiento por defecto.
+`think: false` desactiva el razonamiento de Qwen3.5 (respuestas mucho más rápidas con un modelo de 4B).
 
 ### Cambiar la configuración sin editar archivos
 
@@ -60,15 +79,6 @@ cp config.example.json config.json
 | Archivo de configuración | `--config` | `CONFIG_FILE` | — |
 | Mostrar peticiones al LLM | `--debug` | `DEBUG=1` | — |
 
-```bash
-# Servidor en otro puerto (Linux/Mac)
-PORT=5050 npm run server
-# Servidor en otro puerto (PowerShell)
-$env:PORT=5050; npm run server
-
-# Cliente con otro modelo y otra URL del servidor MCP
-npm run chat -- --model llama3.1:8b --mcp-url http://localhost:5050/mcp
-```
 
 ## Instalación y ejecución
 
@@ -81,7 +91,7 @@ npm run chat -- --model llama3.1:8b --mcp-url http://localhost:5050/mcp
 ### Paso 1. Obtener el proyecto
 
 ```bash
-git clone <URL-DEL-REPOSITORIO>
+git clone https://github.com/Shyneoblaster/MCP_Despensa_y_Cocina
 cd mcp-despensa
 ```
 
@@ -183,7 +193,9 @@ Los datos se guardan en archivos JSON (`data/despensa.json` y `data/recetas.json
 mcp-despensa/
 ├── package.json                  Scripts: server, chat, test:store, typecheck
 ├── tsconfig.json
+├── config.json                   Configuración del cliente (copiada de config.example.json)
 ├── config.example.json           Configuración del cliente de ejemplo (sin secretos)
+├── .env                          Variables de entorno del servidor (copiada de .env.example)
 ├── .env.example                  Variables de entorno de ejemplo
 ├── data/
 │   ├── despensa.json             Despensa (se modifica al usar el asistente)
@@ -242,53 +254,37 @@ Transcripciones o capturas de la ejecución del proyecto.
 
 Salida del servidor (`npm run server`):
 
-```text
-(pega aquí la salida de la terminal)
-```
+![Servidor iniciado](evidencias/1a-servidor.png)
 
 Respuesta en el navegador al abrir `http://localhost:5000/`:
 
-```text
-(pega aquí el JSON que devuelve)
-```
+![Evidencia en el Navegador](evidencias/1b-navegador.png)
 
 ### 2. Cliente mostrando el modelo, la URL del LLM y la URL del servidor MCP
 
-```text
-(pega aquí el bloque "Configuración efectiva" del cliente)
-```
+![Cliente mostrando el modelo, la URL del LLM y la URL del servidor MCP](evidencias/2-configuracion.png)
 
 ### 3. Cliente descubriendo las herramientas MCP
 
-```text
-(pega aquí la lista "Herramientas MCP descubiertas")
-```
+![Cliente descubriendo las herramientas MCP](evidencias/3-herramientas.png)
+
 
 ### 4. Invocación de herramientas MCP y respuesta final
 
 El modelo solicita la herramienta, el cliente hace la llamada real al servidor MCP y el modelo responde con base en el resultado.
 
-```text
-(pega aquí la conversación completa; por ejemplo: "Acabo de hacer quesadillas"
- o "Compré 6 huevos y 1 kilo de arroz", desde el paso [2] hasta "Asistente:")
-```
+![Invocación de herramientas MCP y respuesta final](evidencias/4-herramienta.png)
 
 ### 5. Validación y error controlado
 
 **Ingredientes insuficientes** (`cocinar_receta` es atómica y no descuenta nada):
 
-```text
-(pega aquí la conversación; por ejemplo: "Acabo de hacer hotcakes")
-```
+![Ingredientes Insuficientes](evidencias/5a-error.png)
 
 **Cantidad mayor a la disponible** (`actualizar_despensa`):
 
-```text
-(pega aquí la conversación; por ejemplo: "Usé 5 litros de leche")
-```
+![Cantidad mayor a la disponible](evidencias/5b-error.png)
 
 **Dato inválido** (cantidad o unidad rechazada por el servidor):
 
-```text
-(pega aquí la conversación; por ejemplo: "Compré -3 huevos" o "Compré 2 tazas de harina")
-```
+![Dato Invalido](evidencias/5c-error.png)
